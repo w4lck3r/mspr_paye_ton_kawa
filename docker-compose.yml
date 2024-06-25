@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  nats:
+    image: nats
+    ports:
+      - "4222:4222"
+
+  auth-service:
+    build:
+      context: ./auth-service
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
+
+  order-service:
+    build:
+      context: ./order-service
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
+
+  inventory-service:
+    build:
+      context: ./inventory-service
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
+
+  payment-service:
+    build:
+      context: ./payment-service
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
+
+  product-service:
+    build:
+      context: ./product-service
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
